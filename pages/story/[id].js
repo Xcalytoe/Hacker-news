@@ -62,7 +62,7 @@ function Comment({ comment }) {
 }
 
 const Story = ({post})=>{
-  console.log(post)
+  // console.log(post)
     return(
       <div>
         <Layout title="Story M-News " description ={post.title}>
@@ -203,14 +203,22 @@ const Story = ({post})=>{
 
 // This function gets called at build time
 export async function getStaticPaths() {
-  // Call an external API endpoint to get posts
+  // Call an external API endpoint to get postshttp://hn.algolia.com/api/v1/search?tags=front_page
+
   const res = await fetch('https://hacker-news.firebaseio.com/v0/topstories.json')
-  const posts = await res.json()
+  const posts = await res.json();
+  let storiesId  = await posts.slice(0, 20);
+  let postId = [];
+  for (let storyId of storiesId){
+    postId.push({"id":storyId.toString()})
+  }
+
+  console.log(postId)
   // console.log(posts)
 
   // Get the paths we want to pre-render based on posts
-  const paths = posts.map((post) => ({
-    params: { id: post.toString() },
+  const paths = postId.map((post) => ({
+    params: { id: post.id },
   }))
   // We'll pre-render only these paths at build time.
   // { fallback: false } means other routes should 404.
