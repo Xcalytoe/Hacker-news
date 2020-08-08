@@ -1,7 +1,7 @@
 import Link from 'next/link';
 // import {useState} from 'react';
 
-const StoryList = ({stories, page})=>{
+const StoryList = ({stories})=>{
     // console.log(page);
     return(
         <div className="stories">
@@ -11,16 +11,15 @@ const StoryList = ({stories, page})=>{
                         <div className="header_title">
                             <span className="index">{index + 1}.</span>
                             <a href={data.url} className="title" target="_blank">{data.title}</a>
-                            <a href={`https://${data.domain}`} className="domain" target="_blank">({data.domain})</a>
                         </div>
                     <div>
-                            <span className="points">{data.points || 0} points</span>
+                            <span className="points">{data.score || 0} points</span>
                             <Link href="/story/[id]" as={`/story/${data.id}`}>
-                                <a className="comments">{data.comments_count || 0} comments</a>
+                                <a className="comments">{data.descendants || 0} comments</a>
                             </Link>
                     </div>
-                        <p className="user">By {data.user}</p>
-                        <p className="time">{data.time_ago}</p>
+                        <p className="user">By {data.by}</p>
+                        <p className="time">{new Date((data.time) * 1000).toLocaleString()}</p>
                     </div>
                 ))}
             </div>

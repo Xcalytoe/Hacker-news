@@ -9,11 +9,11 @@ import {useState} from 'react';
 
 
 export default function Home({stories, page, url}) {
-  // console.log(page)
-if (stories.length === 0){
-  return(<Error statusCode = {503} />)
-}
-console.log(url)
+  // console.log(stories)
+// if (stories.length === 0){
+//   return(<Error statusCode = {503} />)
+// }
+// console.log(url)
 
   return (
     <Layout title="M-News" description ="A learning project for cosmas meche on next js">
@@ -28,16 +28,16 @@ console.log(url)
             Welcome to M-News highlights
           </h4>
 
-          <StoryList stories={stories} page={page}/>
+          <StoryList stories={stories}/>
         </main>
         <div className="nav">
                 <Link href="/">
                     <a>Prev</a>
                 </Link>
-                <p>Page {page}</p>
+                {/* <p>Page {page}</p>
                 <Link href={`/?page=${page + 1}`}>
                     <a>Next</a>
-                </Link>
+                </Link> */}
             </div>
         <footer className={styles.footer}>
           <a
@@ -64,15 +64,33 @@ console.log(url)
 }
 export async function getStaticProps(query) {
   let page;
-  let stories;
+  let stories = [];
   let url
   try{
-    console.log(query)
-    page = Number(query.page) || 1;
-   url = `https://node-hnapi.herokuapp.com/news?page=${page}`;
+    // console.log(query)
+    // page = Number(query.page) || 1;
+   url = `https://hacker-news.firebaseio.com/v0/topstories.json`;
   // Call an external API endpoint to get posts.
   const response = await axios.get(url);
-   stories = await response.data;
+  //  let storiesId = await response.data.slice(0, 10);
+  let storiesId  = await response.data.slice(0, 20);
+   for (let story of storiesId){
+    // try{
+      // console.log(story);
+     url = `https://hacker-news.firebaseio.com/v0/item/${story}.json`;
+    // Call an external API endpoint to get posts.
+    let response2 = await axios.get(url);
+     let returnedStories = await response2.data;
+      stories.push(returnedStories)
+    //  console.log(stories);
+  
+    // }catch(err){
+    //   console.log(err);
+    //   stories =[];
+    // }
+   }
+  //  console.log(stories);
+
   }catch(err){
     console.log(err);
     stories =[];
@@ -85,8 +103,8 @@ export async function getStaticProps(query) {
   return {
     props: {
       stories,
-      page,
-      url
+      // page,
+      // url
     },
   }
 }
