@@ -22,7 +22,7 @@ export async function getStaticPaths(){
         usersId.push({"id" : user.toString()})
     }
     const paths = usersId.map((post)=>({
-        params: { id: post.id }
+        params: { id: post.id } 
     }))
       // { fallback: false } means other routes should 404.
     return { paths, fallback: false }
