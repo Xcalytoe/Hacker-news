@@ -229,7 +229,7 @@ export async function getStaticProps({ params }) {
   // params contains the post `id`.
   // If the route is like /posts/1, then params.id is 1
   const res = await fetch(`https://hn.algolia.com/api/v1/items/${params.id}`)
-  const post = await res.json()
+  const post = await res.json() 
 
   // Pass post data to the page via props
   return { props: { post } }

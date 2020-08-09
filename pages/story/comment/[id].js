@@ -28,7 +28,7 @@ export async function getStaticPaths(){
 }
 
 export async function getStaticProps({params}){
-    console.log(params)
+    console.log(params) 
 
     const res = await fetch(`https://hn.algolia.com/api/v1/items/${params.id}`)
     const pathId = await res.json()
