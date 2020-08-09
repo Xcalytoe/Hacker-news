@@ -74,7 +74,7 @@ const Story = ({post})=>{
                   <a>{post.author}</a>
                 </Link>
               </span>
-              <Link href="/user/[id]" as={`/user/${post.author}`}>
+              <Link href="/story/[id]" as={`/story/${post.id}`}>
                   <a className="duration_">{timeFormat(new Date() , post.created_at_i)}</a>
                 </Link>
             </div>
@@ -203,18 +203,17 @@ const Story = ({post})=>{
 
 // This function gets called at build time
 export async function getStaticPaths() {
-  // Call an external API endpoint to get postshttp://hn.algolia.com/api/v1/search?tags=front_page
+  // Call an external API endpoint to get posts
 
   const res = await fetch('https://hacker-news.firebaseio.com/v0/topstories.json')
   const posts = await res.json();
+  // limit the post ids to 20 
   let storiesId  = await posts.slice(0, 20);
   let postId = [];
+  // loop through the ids and asign to postId array 
   for (let storyId of storiesId){
     postId.push({"id":storyId.toString()})
   }
-
-  console.log(postId)
-  // console.log(posts)
 
   // Get the paths we want to pre-render based on posts
   const paths = postId.map((post) => ({
