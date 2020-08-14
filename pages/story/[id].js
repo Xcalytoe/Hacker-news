@@ -26,7 +26,7 @@ const timeFormat = ( currentTime, commentTime)=> {
     }else if(newMonth > commentTimeMonth && commentTimeYear === newYear){
       return (`${newMonth - commentTimeMonth} Month(s) ago`);
     }else if((newDay > commentTimeDay) && (commentTimeMonth === newMonth) && (commentTimeYear === newYear)){
-      return (`${newDay - commentTimeDay} Days(s) ago`);
+      return (`${newDay - commentTimeDay} Day(s) ago`);
     }else if((newHour > commentTimeHour) && (newDay === commentTimeDay) && (commentTimeMonth === newMonth) && (commentTimeYear === newYear)){
       return (`${newHour - commentTimeHour} Hour(s) ago`);
     }else if((newMin > commentTimeMin) && (commentTimeHour === newHour) && (newDay === commentTimeDay) && (commentTimeMonth === newMonth) && (commentTimeYear === newYear)  ){
@@ -38,7 +38,7 @@ const timeFormat = ( currentTime, commentTime)=> {
 function Comment({ comment }) {
   const nestedComments = (comment.children || []).map(comment => {
     return <div  key={comment.id} className="reply_">
-              <Link href="/">
+              <Link  href="/user/[id]" as={`/user/${comment.author}`} >
                 <a className="author">{comment.author}</a>
               </Link>
               <Link href="/story/comment/[id]" as={`/story/comment/${comment.id}`}>
