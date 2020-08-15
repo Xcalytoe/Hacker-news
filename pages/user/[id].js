@@ -1,7 +1,10 @@
-const { default: Layout } = require("../../Component/Layout")
+import Error from "../../Component/Layout"
 
 const User =({data})=>{
     console.log(data)
+    if (!data){
+        return <Error  statusCode={404}/>
+    }
     return(
         <Layout title="User M-News " description="efdchg fdjhx" >
             <div>

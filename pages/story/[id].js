@@ -62,7 +62,9 @@ function Comment({ comment }) {
 }
 
 const Story = ({post})=>{
-  // console.log(post)
+  if (!post){
+    return <Error statusCode={404}/>
+  }
     return(
       <div>
         <Layout title="Story M-News " description ={post.title}>

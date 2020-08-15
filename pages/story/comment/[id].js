@@ -1,5 +1,7 @@
 import Link from 'next/link'
 import Layout from "../../../Component/Layout"
+import Error from "../../Component/Layout"
+
 
 // time of comment 
 const timeFormat = ( currentTime, commentTime)=> {
@@ -59,6 +61,9 @@ function Comment({ comment }) {
     }
 const Comments = ({data})=>{
     console.log(data)
+    if (!data){
+      return <Error statusCode={404}/>
+    }
     return(
         <Layout title="Comment M-News " description="efdchg fdjhx" >
             <div>
